@@ -18,7 +18,7 @@ Navigate to http://localhost:5000 to view in browser.
 
 ## Info
 
-### Frontend
+### Front-end
 
   	React
 	
@@ -28,7 +28,7 @@ Navigate to http://localhost:5000 to view in browser.
 	
   	Date-Fns
   
-### Backend
+### Back-end
   	Node
 	
   	Express

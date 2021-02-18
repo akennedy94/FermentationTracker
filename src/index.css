@@ -5,9 +5,54 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: hsl(0, 0%, 95%);
+  text-align: center;
+  min-height: 100vh;
+}
+
+main {
+  text-align: center;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.section {
+  padding: 1rem 1.5rem;
+}
+
+.box {
+  max-width: 600px;
+  margin: 15px auto;
+}
+
+.form-error {
+  border: 1px solid red;
+}
+
+.project-details {
+  max-height: 250px;
+  overflow:hidden; 
+  overflow-y:scroll;
+}
+
+.project-details::-webkit-scrollbar {
+  width: 14px;
+  height: 18px;
+}
+
+.project-details::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  -webkit-border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+}
+
+#empty-card {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  max-width: 500px;
 }

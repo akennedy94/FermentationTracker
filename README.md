@@ -27,6 +27,8 @@ Navigate to http://localhost:5000 to view in browser.
   	React-Toastify
 	
   	Date-Fns
+	
+	Font Awesome
   
 ### Back-end
   	Node

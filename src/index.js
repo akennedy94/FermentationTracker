@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import FormInput from './inputs/FormInput';
 import NotesInput from './inputs/NotesInput';
@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { ContextConsumer, ContextProvider } from './Context.js';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
@@ -31,6 +32,7 @@ function App() {
 
   return (
     <Router>
+      <ContextProvider value={{projects, setProjects, setEdit}}>
       <Navbar bg="light" expand="lg">
         <Navbar.Brand>Fermentation Tracker</Navbar.Brand>
         <Nav className="mr-auto">
@@ -41,15 +43,18 @@ function App() {
       </Navbar>
 
       <Switch>
-        <Route exact path="/" component={() => <ProjectForm projects={projects} setProjects={setProjects} setEdit={setEdit} edit={edit} selectedProject={selectedProject}/>} />
-        <Route exact path="/active" component={() => <ProjectDisplay projects={projects} setProjects={setProjects} setEdit={setEdit} setSelectedProject={setSelectedProject} projectState={true} />} />
-        <Route exact path="/archive" component={() => <ProjectDisplay projects={projects} setProjects={setProjects} projectState={false} />} />
+        <Route exact path="/" component={() => <ProjectForm edit={edit} selectedProject={selectedProject}/>} />
+        <Route exact path="/active" component={() => <ProjectDisplay  setSelectedProject={setSelectedProject} projectState={true} />} />
+        <Route exact path="/archive" component={() => <ProjectDisplay projectState={false} />} />
       </Switch>
+      </ContextProvider>
     </Router>
   );
 }
 
-function ProjectForm ({ projects, setProjects, setEdit, edit, selectedProject }) {
+function ProjectForm ({ edit, selectedProject }) {
+  const context = useContext(ContextConsumer);
+  const [projects, setProjects, setEdit] = [context.projects, context.setProjects, context.setEdit];
   const [projectName, setProjectName] = useState(null);  
   const [description, setDescription] = useState(null);
   const [weight, setWeight] = useState(null);
@@ -318,8 +323,9 @@ function ProjectForm ({ projects, setProjects, setEdit, edit, selectedProject })
   )
 }
 
-function ProjectDisplay ({ projects, setProjects, projectState, setEdit, setSelectedProject }) {
-
+function ProjectDisplay ({  projectState, setSelectedProject }) {
+  const context = useContext(ContextConsumer);
+  const [projects, setProjects, setEdit] = [context.projects, context.setProjects, context.setEdit];
   const filter = projects.filter(project => project.active === projectState);
 
   // sets project status to complete
@@ -397,7 +403,7 @@ function ProjectDisplay ({ projects, setProjects, projectState, setEdit, setSele
 
 const ProjectCard = ({project, handleStatusChange, handleDelete, handleEditClick}) => {
   const [pastDue, setPastDue] = useState(false);
-
+  
   // check to see if before or after due date
   const checkDate = (projectDate) => {
     const today = format(new Date(), "yyyy-MM-dd");
@@ -453,7 +459,7 @@ const ProjectCard = ({project, handleStatusChange, handleDelete, handleEditClick
     )
 }
 
-const EmptyCard = ({projectState}) => {
+const EmptyCard = ({ projectState }) => {
   return (
     <Card id="empty-card">
       <Card.Header>

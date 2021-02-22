@@ -16,6 +16,8 @@ The server will start on port 5000.
 
 Navigate to http://localhost:5000 to view in browser.
 
+The project will load with two active projects and one archived project in the db as examples. 
+
 ## Info
 
 ### Front-end

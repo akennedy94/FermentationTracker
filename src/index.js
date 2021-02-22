@@ -2,20 +2,19 @@ import React, { useState, useEffect, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import FormInput from './inputs/FormInput';
 import NotesInput from './inputs/NotesInput';
+import ProjectDisplay from './subcomponents/ProjectDisplay.js';
+import LandingPage from './subcomponents/LandingPage.js';
 import axios from 'axios';
 import {  Form, Button, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import './index.css';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import './css/index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ContextConsumer, ContextProvider } from './Context.js';
-import ProjectDisplay from './subcomponents/projectDisplay.js';
-
-ReactDOM.render(<App />, document.getElementById('root'));
 
 toast.configure();
 
-function App() {
+const App = () => {
   const [projects, setProjects] = useState([]);
   const [edit, setEdit] = useState(false);
   const [selectedProject, setSelectedProject] = useState({});
@@ -35,15 +34,20 @@ function App() {
       <ContextProvider value={{projects, setProjects, setEdit}}>
       <Navbar bg="light" expand="lg">
         <Navbar.Brand>Fermentation Tracker</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link><Link to="/">Project Form</Link></Nav.Link>
-          <Nav.Link><Link to="/active">{activeProjects} Active Projects</Link></Nav.Link>
-          <Nav.Link><Link to="/archive">{archivedProjects} Archived Projects</Link></Nav.Link>
-        </Nav>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/projectForm">Project Form</Nav.Link>
+            <Nav.Link href="/active">{activeProjects} Active Project{activeProjects === 1 ? "" : "s"}</Nav.Link>
+            <Nav.Link href="/archive">{archivedProjects} Archived Project{archivedProjects === 1 ? "" : "s"}</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
       </Navbar>
 
       <Switch>
-        <Route exact path="/" component={() => <ProjectForm edit={edit} selectedProject={selectedProject} />} />
+        <Route exact path="/" component={() => <LandingPage />} />
+        <Route exact path="/projectForm" component={() => <ProjectForm edit={edit} selectedProject={selectedProject} />} />
         <Route exact path="/active" component={() => <ProjectDisplay  setSelectedProject={setSelectedProject} projectState={true} />} />
         <Route exact path="/archive" component={() => <ProjectDisplay projectState={false} />} />
       </Switch>
@@ -52,7 +56,7 @@ function App() {
   );
 }
 
-function ProjectForm ({ edit, selectedProject }) {
+const ProjectForm = ({ edit, selectedProject }) => {
   const context = useContext(ContextConsumer);
   const [projects, setProjects, setEdit] = [context.projects, context.setProjects, context.setEdit];
   const [projectName, setProjectName] = useState(null);  
@@ -268,7 +272,7 @@ function ProjectForm ({ edit, selectedProject }) {
               <Row>
                 <Col>
                   <Button 
-                    size="lg"
+                    className="ut-btn"
                     type="submit" 
                     id="formButton" 
                     onClick={(e) => {
@@ -280,9 +284,9 @@ function ProjectForm ({ edit, selectedProject }) {
                     }}>{edit ? "Submit Edits" : "Submit"}</Button>
                 </Col>
                 <Col>
-                  {edit ? <Button variant="danger" size="lg" onClick={() => handleCancel()}>Cancel changes</Button> 
+                  {edit ? <Button className="ut-btn" variant="danger" size="lg" onClick={() => handleCancel()}>Cancel changes</Button> 
                   : 
-                  <Button variant="danger" size="lg" onClick={() => handleReset()}>Clear Form</Button>}
+                  <Button className="ut-btn" variant="danger" size="lg" onClick={() => handleReset()}>Clear Form</Button>}
                 </Col>
               </Row>
           </Form>
@@ -290,3 +294,5 @@ function ProjectForm ({ edit, selectedProject }) {
     </div>
   )
 }
+
+ReactDOM.render(<App />, document.getElementById('root'));

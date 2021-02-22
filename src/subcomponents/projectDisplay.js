@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container,  Button, Row, Col, Card } from 'react-bootstrap';
 import { ContextConsumer } from '../Context.js';
-import { axios } from 'axios';
+import axios from 'axios';
 import { toast } from 'react-toastify';
-import { compareDesc, format, parseISO } from 'date-fns'
+import { compareDesc, format, parseISO } from 'date-fns';
 import { Link } from "react-router-dom";
+import '../css/projectDisplay.css';
 
-function ProjectDisplay ({  projectState, setSelectedProject }) {
+const ProjectDisplay = ({  projectState, setSelectedProject }) => {
     const context = useContext(ContextConsumer);
     const [projects, setProjects, setEdit] = [context.projects, context.setProjects, context.setEdit];
     const filter = projects.filter(project => project.active === projectState);
@@ -99,53 +100,55 @@ function ProjectDisplay ({  projectState, setSelectedProject }) {
   
     // set pastDue state on component mount 
     useEffect(() => {checkDate(project.time)}, []);
-  
+
     return (
-        <Card key={project._id} className="mt-4 ml-4" style={{width: "40rem"}}>
-          <Card.Header>
-            {pastDue && project.active ? <i className="fas fa-exclamation mr-4 mt-1" style={{color: "red", fontSize: "1.5rem"}} title="This project is past due!"/> : null}
-            <Card.Title className="mt-1">{project.projectName}</Card.Title>
-          </Card.Header>
-            
-          <Card.Body>
-            <Card.Text className="text-left project-details">
-              <strong>Description:</strong> {project.description} <br/>
-              <strong>Total Dry Weight (g):</strong> {project.weight} g <br/>
-              <strong>Salt Percentage:</strong> {project.saltPercentage}% <br/>
-              <strong>Total Salt:</strong> {project.saltWeight} g <br/>
-              {project.active ? <div><strong>Complete on:</strong> {project.time}<br/></div> : <div><strong>Completed on:</strong> {project.time}<br/></div>}
-              <strong>Notes:</strong><br/> {project.notes === "" ? "N/A" : project.notes}
-            </Card.Text>
-            <Row className="mt-4">
-              <Col>
-                {
-                  project.active ? <Button size="md" onClick={handleStatusChange} 
-                  id={project._id}>Mark Project As Complete</Button> : null
-                }
-              </Col>
-              <Col>
-                <Button variant="danger" size="md" onClick={handleDelete} id={project._id}>Delete Project</Button>
-              </Col>
-              <Col>
-                {
-                  project.active ? 
-                    <Link to="/">
-                      <Button variant="warning" size="md" onClick={() => handleEditClick(project)}
-                      id={project._id}>Edit This Project</Button>
-                    </Link>
-                  : null
-                }
-              </Col>
-            </Row>
-          </Card.Body>
-        </Card>
+        <Col className="project-col">
+            <Card key={project._id} >
+                <Card.Header>
+                    {pastDue && project.active ? <i className="fas fa-exclamation mr-4 mt-1" style={{color: "red", fontSize: "1.5rem"}} title="This project is past due!"/> : null}
+                    <Card.Title className="mt-1">{project.projectName}</Card.Title>
+                </Card.Header>
+                    
+                <Card.Body>
+                    <Card.Text className="text-left">
+                    <strong>Description:</strong> {project.description} <br/>
+                    <strong>Total Dry Weight (g):</strong> {project.weight} g <br/>
+                    <strong>Salt Percentage:</strong> {project.saltPercentage}% <br/>
+                    <strong>Total Salt:</strong> {project.saltWeight} g <br/>
+                    {project.active ? <div><strong>Complete on:</strong> {project.time}<br/></div> : <div><strong>Completed on:</strong> {project.time}<br/></div>}
+                    <strong>Notes:</strong><br/> {project.notes === "" ? "N/A" : project.notes}
+                    </Card.Text>
+                    <Row className="mt-4 btn-row">
+                        <Col className="btn-col">
+                            {
+                            project.active ? <Button className="ut-btn" onClick={handleStatusChange} 
+                            id={project._id}>Complete Project</Button> : null
+                            }
+                        </Col>
+                        <Col className="btn-col">
+                            <Button variant="danger" className="ut-btn" onClick={handleDelete} id={project._id}>Delete Project</Button>
+                        </Col>
+                        <Col className="btn-col">
+                            {
+                            project.active ? 
+                                <Link to="/">
+                                    <Button variant="warning" className="ut-btn" onClick={() => handleEditClick(project)}
+                                    id={project._id}>Edit Project</Button>
+                                </Link>
+                            : null
+                            }
+                        </Col>
+                    </Row>
+                </Card.Body>
+            </Card>
+        </Col>
       )
   }
   
   const EmptyCard = ({ projectState }) => {
     return (
       <Card id="empty-card">
-        <Card.Header>
+        <Card.Header className="empty-header">
           <Card.Title className="mt-2">You haven't {projectState ? "added" : "archived"} any projects yet!</Card.Title>
         </Card.Header>
         <Card.Body>

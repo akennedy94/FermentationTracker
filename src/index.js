@@ -43,7 +43,7 @@ function App() {
       </Navbar>
 
       <Switch>
-        <Route exact path="/" component={() => <ProjectForm edit={edit} selectedProject={selectedProject}/>} />
+        <Route exact path="/" component={() => <ProjectForm edit={edit} selectedProject={selectedProject} />} />
         <Route exact path="/active" component={() => <ProjectDisplay  setSelectedProject={setSelectedProject} projectState={true} />} />
         <Route exact path="/archive" component={() => <ProjectDisplay projectState={false} />} />
       </Switch>
@@ -63,41 +63,18 @@ function ProjectForm ({ edit, selectedProject }) {
   const [time, setTime] = useState(null);
   const [notes, setNotes] = useState(null);
   const [projectId, setProjectId] = useState(null);
-  const fields = [
-    {element: document.getElementById("project")},
-    {element: document.getElementById("description")},
-    {element: document.getElementById("weight")},
-    {element: document.getElementById("salt")},
-    {element: document.getElementById("time")}
-  ]
+  const [submitted, setSubmitted] = useState(false);
 
   // validate form inputs
   const validateForm = () => {
-    let formValid = true;
-    fields.forEach(field => field.element.classList.remove("form-error"));
-    
-    if (projectName === null) {
-      fields[0].element.classList.add("form-error");
-      formValid = false;
-    }
-    if (description === null) {
-      fields[1].element.classList.add("form-error");
-      formValid = false;
-    }
-    if (weight === null) {
-      fields[2].element.classList.add("form-error");
-      formValid = false;
-    }
-    if (saltPercentage === null) {
-      fields[3].element.classList.add("form-error");
-      formValid = false;
-    }
-    if (time === null) {
-      fields[4].element.classList.add("form-error");
-      formValid = false;
-    }
-    
-    return formValid;
+    if (projectName !== null 
+      && description !== null 
+      && weight !== null 
+      && saltPercentage !== null 
+      && time !== null) {
+        return true;
+      }
+    return false;
   }
 
   // build project object if validation sucessful
@@ -123,6 +100,7 @@ function ProjectForm ({ edit, selectedProject }) {
   // handle form button submitting new project
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitted(true);
     const project = buildProject();
 
     if (project.built) {
@@ -143,11 +121,10 @@ function ProjectForm ({ edit, selectedProject }) {
     }
   }
   
-  // handle form button click for submitting edits
+  // handle submit button click in edit state
   const handleEdit = async (e) => {
     e.preventDefault();
     const update = buildProject();
-    console.log("EDIT BUTTON PRESSED")
 
     if (update.built){
       updateProject(projectId, update.newProject).then(id => update.newProject._id = id);
@@ -188,14 +165,7 @@ function ProjectForm ({ edit, selectedProject }) {
 
   // reset form and states to default
   const handleReset = () => {
-    if (edit) {
-      const button = document.getElementById("formButton");
-      button.innerHTML = "Submit";
-    }
-
-    fields.forEach(field => field.element.value="");
-    fields.forEach(field => field.element.classList.remove("form-error"));
-
+    setSubmitted(false);
     setEdit(false);
     setProjectName(null);
     setDescription(null);
@@ -233,8 +203,6 @@ function ProjectForm ({ edit, selectedProject }) {
   // fill form to with project details
   const setFormToEdit = () => {
     if (edit) {
-      const button = document.getElementById("formButton");
-      button.innerHTML = "Submit Changes";
 
       setProjectName(selectedProject.projectName);
       setDescription(selectedProject.description);
@@ -261,22 +229,22 @@ function ProjectForm ({ edit, selectedProject }) {
             <Form.Label className="label">Fermentation Tracker</Form.Label>
               <Row className="mt-2">
                 <Col>
-                  <FormInput for="project" type="text" title="Project Name" onChange={setProjectName} value={projectName} />
+                  <FormInput for="project" type="text" title="Project Name" onChange={setProjectName} errorPresent={submitted && projectName === null} value={projectName} />
                 </Col>
               </Row>
               <Row className="mt-2">
                 <Col>
-                  <FormInput for="description" type="text" title="Description" onChange={setDescription} value={description} />
+                   <FormInput for="description" type="text" title="Description" onChange={setDescription} errorPresent={submitted && description === null} value={description} />
                 </Col>
               </Row>
               <Row className="mt-2">
                 <Col>
-                  <FormInput for="weight" type="number" title="Dry Weight of Ferment (g)" onChange={setWeight} value={weight} />
+                  <FormInput for="weight" type="number" title="Dry Weight of Ferment (g)" onChange={setWeight} errorPresent={submitted && weight === null} value={weight} />
                 </Col>
               </Row>
               <Row className="mt-2">
                 <Col>
-                  <FormInput for="salt" type="number" title="Salt %" onChange={setSaltPercentage} value={saltPercentage} />
+                  <FormInput for="salt" type="number" title="Salt %" onChange={setSaltPercentage} errorPresent={submitted && saltPercentage === null} value={saltPercentage} />
                 </Col>
               </Row>
               <Row>
@@ -288,7 +256,7 @@ function ProjectForm ({ edit, selectedProject }) {
               <Row>
                 <Col>
                   <label>Complete on</label>
-                  <FormInput for="time" type="date" title="Complete on" onChange={setTime} value={time} />
+                  <FormInput for="time" type="date" title="Complete on" onChange={setTime} errorPresent={submitted && time === null} value={time} />
                 </Col>
               </Row>
               <Row>
@@ -309,7 +277,7 @@ function ProjectForm ({ edit, selectedProject }) {
                       } else {
                         handleSubmit(e);
                       }
-                    }}>Submit</Button>
+                    }}>{edit ? "Submit Edits" : "Submit"}</Button>
                 </Col>
                 <Col>
                   {edit ? <Button variant="danger" size="lg" onClick={() => handleCancel()}>Cancel changes</Button> 

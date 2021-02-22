@@ -1,8 +1,9 @@
 const FormInput = (props) => {
+
     return (
         <div>
             <input 
-                className="form-control"
+                className={`form-control ${props.errorPresent ? "form-error" : ""}`}
                 type={props.type} 
                 id={props.for}
                 name={props.title}
@@ -13,7 +14,7 @@ const FormInput = (props) => {
                         props.onChange(event.target.value);
                     }
                 }}
-                value={props.value}
+                value={`${props.value === null ? "" : props.value}`}
                 placeholder={props.title}
                 required
                 readOnly={props.readOnly ? props.readOnly : false}

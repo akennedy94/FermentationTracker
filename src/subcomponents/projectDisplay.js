@@ -131,7 +131,7 @@ const ProjectDisplay = ({  projectState, setSelectedProject }) => {
                         <Col className="btn-col">
                             {
                             project.active ? 
-                                <Link to="/">
+                                <Link to="/projectForm">
                                     <Button variant="warning" className="ut-btn" onClick={() => handleEditClick(project)}
                                     id={project._id}>Edit Project</Button>
                                 </Link>

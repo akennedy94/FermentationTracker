@@ -7,7 +7,6 @@ const routeIndex = require('./serverRouting.js');
 const PORT = 5000;
 
 app.use(bodyParser.json())
-    .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: false }))
     .use(express.static(path.join(__dirname, '../build')))
     .use(express.json())

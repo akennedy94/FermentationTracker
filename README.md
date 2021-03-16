@@ -30,6 +30,7 @@ The project will load with two active projects and one archived project in the d
 
     React
     React-Boostrap
+    React Router
     React-Toastify
     Date-Fns
     Font Awesome
@@ -38,6 +39,5 @@ The project will load with two active projects and one archived project in the d
 
     Node
     Express
-    React Router
     NeDB
     Axios

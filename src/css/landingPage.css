@@ -1,42 +1,41 @@
 h1 {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 30px;
-    font-weight: 700;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
 }
 
 .logo {
-    max-width: 500px;
-    max-height: 500px;
+  max-width: 500px;
+  max-height: 500px;
 }
 
 .text-col {
-    min-width: 300px;
-    width: 100%;
-    padding-top: 75px;
+  min-width: 300px;
+  width: 100%;
+  padding-top: 75px;
 }
 
 p {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 400;
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 400;
 }
 
-@media (max-width:1200px) {
-    .logo {
-        max-width: 400px;
-        max-height: 400px;
-    }
+@media (max-width: 1200px) {
+  .logo {
+    max-width: 400px;
+    max-height: 400px;
+  }
 }
 
-@media(max-width:500px){
-    .logo {
-        max-width: 300px;
-        max-height: 300px;
-    }
+@media (max-width: 500px) {
+  .logo {
+    max-width: 300px;
+    max-height: 300px;
+  }
 }
 
-@media(max-width:991px){
-    .text-col {
-        padding-top: 0px;
-    }
+@media (max-width: 991px) {
+  .text-col {
+    padding-top: 0px;
+  }
 }
-

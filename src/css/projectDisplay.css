@@ -2,7 +2,7 @@
   margin-top: 60px;
   margin-bottom: 60px;
   max-width: 500px;
-  height:200px;
+  height: 200px;
 }
 
 .empty-header {
@@ -10,7 +10,7 @@
 }
 
 .project-col {
-  display:flex;
+  display: flex;
   justify-content: left;
 }
 
@@ -28,8 +28,8 @@
 }
 
 .card::-webkit-scrollbar {
-  height:0px;
-  width:0px;
+  height: 0px;
+  width: 0px;
 }
 
 .btn-row::-webkit-scrollbar {
@@ -50,7 +50,8 @@
     background-clip: padding-box;
     -webkit-border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05),
+      inset 1px 1px 0px rgba(0, 0, 0, 0.05);
   }
 }
 

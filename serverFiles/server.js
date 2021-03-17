@@ -4,7 +4,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const routeIndex = require("./serverRouting.js");
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app
   .use(bodyParser.json())

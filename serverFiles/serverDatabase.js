@@ -1,8 +1,5 @@
 const nedb = require("nedb");
-const activeDB = new nedb({
-  filename: "fermentationProjects.db",
-  autoload: true,
-});
+const activeDB = new nedb();
 
 exports.saveNewProject = async (project) => {
   return new Promise((resolve, reject) => {

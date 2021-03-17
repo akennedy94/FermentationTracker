@@ -1,2 +1,5 @@
-/build
-/node_modules
+.git
+.gitignore
+
+# Node.js dependencies:
+node_modules/

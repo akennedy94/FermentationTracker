@@ -28,16 +28,16 @@ The project will load with two active projects and one archived project in the d
 
 ### Front-end
 
-React
-React-Boostrap
-React-Toastify
-Date-Fns
-Font Awesome
+    React
+    React-Boostrap
+    React Router
+    React-Toastify
+    Date-Fns
+    Font Awesome
 
 ### Back-end
 
-Node
-Express
-React Router
-NeDB
-Axios
+    Node
+    Express
+    NeDB
+    Axios

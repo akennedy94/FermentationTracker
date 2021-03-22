@@ -19,6 +19,15 @@ exports.getAllProjects = async () => {
   }).catch((error) => console.log(error));
 };
 
+exports.getUserProjects = async (userID) => {
+  return new Promise((resolve, reject) => {
+    activeDB.find({userID: userID}, (err, projects) => {
+      if (err) reject(err);
+      if (projects) resolve({ status: true, projects: projects });
+    });
+  }).catch((error) => console.log(error));
+};
+
 exports.updateStatus = async (idToUpdate) => {
   return new Promise((resolve, reject) => {
     activeDB.update(

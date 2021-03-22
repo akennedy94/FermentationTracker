@@ -14,19 +14,31 @@ import { ContextConsumer, ContextProvider } from "./Context.js";
 
 toast.configure();
 
+if (window.localStorage.getItem("userID") === null) {
+  window.localStorage.setItem("userID", JSON.stringify(new Date()));
+}
+
 const App = () => {
   const [projects, setProjects] = useState([]);
   const [edit, setEdit] = useState(false);
   const [selectedProject, setSelectedProject] = useState({});
-  const activeProjects = projects.filter((project) => project.active === true)
+  const userID = JSON.parse(window.localStorage.getItem("userID"));
+  
+  const activeProjects = projects.filter(
+    (project) => project.active === true)
     .length;
   const archivedProjects = projects.filter(
-    (project) => project.active === false
-  ).length;
+    (project) => project.active === false)
+    .length;
+  
 
   async function getProjects() {
     const getProjects = await axios
-      .get("/fermentation/projects")
+      .get(`/fermentation/projects/${userID}`, {
+        params: {
+          userID: userID
+        }
+      })
       .then((response) => {
         setProjects(response.data);
       })
@@ -104,6 +116,7 @@ const ProjectForm = ({ edit, selectedProject }) => {
   const [notes, setNotes] = useState(null);
   const [projectId, setProjectId] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const userID = JSON.parse(window.localStorage.getItem("userID"));
 
   // validate form inputs
   const validateForm = () => {
@@ -131,6 +144,7 @@ const ProjectForm = ({ edit, selectedProject }) => {
         time: time,
         active: true,
         notes: notes,
+        userID: userID,
       };
       return { built: true, newProject: newProject };
     } else {

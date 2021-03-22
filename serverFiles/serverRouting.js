@@ -3,10 +3,10 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 
-// get all docs
-router.get("/fermentation/projects", async (req, res) => {
+// get a user's docs
+router.get("/fermentation/projects/:userID", async (req, res) => {
   const result = await database
-    .getAllProjects()
+    .getUserProjects(req.params.userID)
     .then((response) => {
       if (response.status) {
         res.status(200).send(response.projects);

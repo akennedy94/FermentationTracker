@@ -1,16 +1,15 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const bodyParser = require("body-parser");
 const routeIndex = require("./serverRouting.js");
-
+const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 5000;
 
 app
-  .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: false }))
-  .use(express.static(path.join(__dirname, "../build")))
   .use(express.json())
+  .use(cookieParser())
+  .use(express.urlencoded({ extended: true }))
+  .use(express.static(path.join(__dirname, "../build")))
   .use("/", routeIndex);
 
 app.listen(PORT, () => {

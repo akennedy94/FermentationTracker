@@ -10,6 +10,12 @@ Firstly, it automatically calculates the amount of salt I need to add to vegtabl
 
 Secondly, this app allows me to keep track of each project I'm currently working on as well archiving projects that have been previously completed, allowing for quick and easy reference.
 
+## This project is hosted on Google Cloud!
+
+You can navigate to the following link to preview the project! 
+
+https://ferment.akennedy.info/
+
 ## Installation
 
 In the root directory:
